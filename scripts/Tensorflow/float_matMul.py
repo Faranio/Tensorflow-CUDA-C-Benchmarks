@@ -38,7 +38,7 @@ def matrix_multiplication(verbose=False, device="/gpu:0"):
 	
 	if verbose:
 		print("[{}] (Matrix Multiplication) Elapsed Time = {} ms".format(deviceType, elapsed_time))
-		verify_mm(A, P * 1 * 2)
+		# verify_mm(A, P * 1 * 2)
 	
 	return elapsed_time
 
@@ -46,7 +46,7 @@ def matrix_multiplication(verbose=False, device="/gpu:0"):
 def main():
 	count = 100
 	averageTime = 0
-	# matrix_multiplication(False, device)
+	matrix_multiplication(False, device)
 	
 	for i in range(count):
 		averageTime += matrix_multiplication(False, device)

@@ -39,7 +39,7 @@ def dot_product(verbose=False, device="/gpu:0"):
 def main():
 	count = 100
 	averageTime = 0
-	# dot_product(False, device)
+	dot_product(False, device)
 	
 	for i in range(count):
 		averageTime += dot_product(False, device)

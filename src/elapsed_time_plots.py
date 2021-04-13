@@ -15,6 +15,9 @@ def plot_elapsed_time_graph(data, title):
 			barlist[i].set_color('orange')
 		else:
 			barlist[i].set_color('cyan')
+			
+	for i, v in enumerate(values):
+		plt.text(1, i - 0.05, "{:.2f}".format(v), color='blue', fontweight='bold', fontsize=20)
 	
 	plt.yticks(y_pos, names, fontsize=15)
 	plt.xlabel('Average Inference Time in ms', fontsize=20)
@@ -100,6 +103,18 @@ def main():
 		'[CPU - Float] CUDA C (Sequential)': 48.004147,
 		'[CPU - Float] Tensorflow': 0.7069014800072182
 	}
+	
+	# matrix_multiplication_gpu_elapsed_time_tensorflow = {
+	# 	'[GPU - Double] Tensorflow (First Execution)': 405.06568500040885,
+	# 	'[GPU - Double] Tensorflow (Second Execution)': 0.09341699978904217,
+	# 	'[GPU - Float] Tensorflow (First Execution)': 396.4082520001284,
+	# 	'[GPU - Float] Tensorflow (Second Execution)': 0.08577600010539754
+	# }
+	
+	# plot_elapsed_time_graph(data=matrix_multiplication_gpu_elapsed_time_tensorflow, title="[GPU] Matrix Multiplication "
+	#                                                                                       "Inference Time for Single and "
+	#                                                                                       "Double Precision Data "
+	#                                                                                       "(512x256 and 256x128 size)")
 	
 	plot_elapsed_time_graph(data=saxpy_gpu_elapsed_time, title="[GPU] SAXPY/DAXPY Inference Time for Single and Double "
 	                                                           "Precision Data (65536 size)")

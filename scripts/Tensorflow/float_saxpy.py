@@ -44,7 +44,7 @@ def saxpy(verbose=False, device="/gpu:0"):
 def main():
     count = 100
     averageTime = 0
-    # saxpy(False, device)
+    saxpy(False, device)
 
     for i in range(count):
         averageTime += saxpy(False, device)

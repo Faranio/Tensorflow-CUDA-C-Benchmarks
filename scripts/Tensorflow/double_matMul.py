@@ -48,7 +48,7 @@ def matrix_multiplication(verbose=False, device="/gpu:0"):
 def main():
 	count = 100
 	averageTime = 0
-	# matrix_multiplication(False)
+	matrix_multiplication(False)
 	
 	for i in range(count):
 		averageTime += matrix_multiplication(False, device)
