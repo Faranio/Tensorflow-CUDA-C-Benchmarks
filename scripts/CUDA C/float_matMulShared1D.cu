@@ -3,7 +3,7 @@
 #define M 512
 #define P 256
 #define N 128
-#define K 16
+#define K 32
 
 // My own implementation of Matrix Multiplication based on Lecture Notes
 __global__ void sharedMatrixMultiplication1D(float A[M][P], float B[P][N], float C[M][N]) {
@@ -20,9 +20,9 @@ __global__ void sharedMatrixMultiplication1D(float A[M][P], float B[P][N], float
     for (int k = 0; k < P / K; k++) {
         As[s_i][s_j] = A[i][k * K + s_j];
         Bs[s_i][s_j] = B[k * K + s_i][j];
-        
+
         __syncthreads();
-        
+
         for (int e = 0; e < K; e++)
             tempC += As[s_i][e] * Bs[e][s_j];
     }

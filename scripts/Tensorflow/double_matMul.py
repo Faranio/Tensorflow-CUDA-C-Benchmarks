@@ -1,8 +1,6 @@
 import tensorflow as tf
 import time
 
-from datetime import datetime
-
 M = 512
 P = 256
 N = 128

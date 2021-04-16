@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define M 512
-#define K 128
+#define K 64
 
 // Implementation of the Matrix Add taken from the Lecture Notes
 __global__ void matrixAdd1D(float A[M][M], float B[M][M]) {
@@ -28,8 +28,8 @@ float matrixAddHost(bool verbose) {
     
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < M; j++) {
-            A[i][j] = 1.0;
-            B[i][j] = 2.0;
+            A[i][j] = 1.0f;
+            B[i][j] = 2.0f;
         }
     }
     

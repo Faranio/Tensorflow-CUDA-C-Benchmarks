@@ -14,18 +14,18 @@ void verifySaxpy(float A[M], int check) {
 }
 
 float saxpyHost(bool verbose) {
-    float A[M], B[M];
+    float A[M], B[M], alpha = 2.0f;
     
     for (int i = 0; i < M; i++) {
-        A[i] = 1.0;
-        B[i] = 2.0;
+        A[i] = 1.0f;
+        B[i] = 2.0f;
     }
 
     clock_t start, end;
     start = clock();
 
     for (int i = 0; i < M; i++) {
-    	A[i] = 2.0 * A[i] + B[i];
+    	A[i] = alpha * A[i] + B[i];
     }
 
     end = clock();

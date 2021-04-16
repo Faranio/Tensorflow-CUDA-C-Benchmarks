@@ -7,15 +7,15 @@
 
 // My own implementation of 1D Matrix Multiplication based on Lecture Notes
 __global__ void sharedMatrixMultiplication1D(double A[M][P], double B[P][N], double C[M][N]) {
+    __shared__ float As[K][K];
+    __shared__ float Bs[K][K];
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     int s_idx = threadIdx.x;
     int i = (int)(idx / N);
     int j = idx % N;
     int s_i = (int)(s_idx / K);
     int s_j = s_idx % K;
-    float tempC = 0;
-    __shared__ float As[K][K];
-    __shared__ float Bs[K][K];
+    float tempC = 0.0f;
     
     for (int k = 0; k < P / K; k++) {
         As[s_i][s_j] = A[i][k * K + s_j];

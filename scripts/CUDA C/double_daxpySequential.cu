@@ -14,11 +14,11 @@ void verifyDaxpy(double A[M], int check) {
 }
 
 double daxpyHost(bool verbose) {
-    double A[M], B[M], alpha = 2.0;
+    double A[M], B[M], alpha = 2.0f;
     
     for (int i = 0; i < M; i++) {
-        A[i] = 1.0;
-        B[i] = 2.0;
+        A[i] = 1.0f;
+        B[i] = 2.0f;
     }
 
     clock_t start, end;
