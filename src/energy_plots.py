@@ -65,6 +65,10 @@ def main():
 		'[GPU - Float] Tensorflow': 35953.68469933332,
 	}
 	
+	slenet_inference_energy = {
+		'[GPU] Tensorflow': 82392.58349666724
+	}
+	
 	plot_energy_graph(data=saxpy_gpu_energy,
 	                 title="[GPU] SAXPY/DAXPY Inference Time for Single and Double Precision Data "
 	                       "(65536 size)")

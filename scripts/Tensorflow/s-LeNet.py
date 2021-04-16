@@ -6,8 +6,8 @@ device = "/cpu:0"
 model = None
 
 # Additional configs needed to solve the NotFoundError
-physical_devices = tf.config.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(physical_devices[0], True)
+# physical_devices = tf.config.list_physical_devices('GPU')
+# tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 
 def loadData():
@@ -74,9 +74,10 @@ def evaluate(X_test, y_test, verbose=False, device="/gpu:0"):
 
 
 def main():
-	count = 100
 	acc = 0
 	averageTime = 0
+	count = 100
+	deviceType = device.upper()[1:4]
 	(X_train, y_train), (X_test, y_test) = loadData()
 	# createModel()
 	# checkpoint_path = trainModel(X_train, y_train)
@@ -87,8 +88,8 @@ def main():
 		averageTime += time
 	
 	averageTime /= count
-	print("[GPU] (s-LeNet Inference) Average Elapsed Time = {} ms".format(averageTime))
-	print("[GPU] (s-LeNet Inference) Accuracy = {} %".format(acc))
+	print("[{}] (s-LeNet Inference) Average Elapsed Time = {} ms".format(deviceType, averageTime))
+	print("[{}] (s-LeNet Inference) Accuracy = {} %".format(deviceType, acc))
 
 
 if __name__ == "__main__":
