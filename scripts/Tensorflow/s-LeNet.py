@@ -1,13 +1,15 @@
+import os
 import tensorflow as tf
 import time
 
 checkpoint_path = "./model.ckpt"
-device = "/cpu:0"
+device = "/gpu:0"
 model = None
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 # Additional configs needed to solve the NotFoundError
-# physical_devices = tf.config.list_physical_devices('GPU')
-# tf.config.experimental.set_memory_growth(physical_devices[0], True)
+physical_devices = tf.config.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 
 def loadData():
@@ -57,7 +59,7 @@ def evaluate(X_test, y_test, verbose=False, device="/gpu:0"):
 	start = time.perf_counter()
 	
 	with tf.device(device):
-		loss, acc = model.evaluate(X_test, y_test, verbose=0)
+		loss, acc = model.evaluate(X_test, y_test, batch_size=8192, verbose=0)
 	
 	end = time.perf_counter()
 	

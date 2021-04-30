@@ -15,6 +15,9 @@ def plot_energy_graph(data, title):
 			barlist[i].set_color('orange')
 		else:
 			barlist[i].set_color('cyan')
+			
+	for i, v in enumerate(values):
+		plt.text(0, i, "{:.5f}".format(v), color='blue', fontweight='bold', fontsize=20)
 	
 	plt.yticks(y_pos, names, fontsize=15)
 	plt.xlabel('Average Energy in mJ', fontsize=20)
@@ -43,8 +46,8 @@ def main():
 	
 	# MxM = 512x512
 	matrix_add_gpu_energy = {
-		'[GPU - Double] CUDA C (1D, 4096 blocks, 64 threads)': 31390.00210513239,
 		'[GPU - Double] CUDA C (2D, 64x64 blocks, 8x8 threads)': 29297.94390794708,
+		'[GPU - Double] CUDA C (1D, 4096 blocks, 64 threads)': 31390.00210513239,
 		'[GPU - Double] Tensorflow': 33870.47547165229,
 		'[GPU - Float] CUDA C (1D, 2048 blocks, 128 threads)': 21535.770529669684,
 		'[GPU - Float] CUDA C (2D, 64x64 blocks, 8x8 threads)': 22736.71216231127,
@@ -53,33 +56,34 @@ def main():
 	
 	# MxN = 512x128
 	matrix_multiplication_gpu_energy = {
-		'[GPU - Double] CUDA C (Global, 1D, 1024 blocks, 64 threads)': 25582.59022052472,
-		'[GPU - Double] CUDA C (Global, 2D, 64x16 blocks, 8x8 threads)': 35300.91057427724,
 		'[GPU - Double] CUDA C (Shared, 1D, 256 blocks, 256 threads)': 18414.477424621582,
+		'[GPU - Double] CUDA C (Global, 1D, 1024 blocks, 64 threads)': 25582.59022052472,
 		'[GPU - Double] CUDA C (Shared, 2D, 64x16 blocks, 8x8 threads)': 26264.521358013157,
+		'[GPU - Double] CUDA C (Global, 2D, 64x16 blocks, 8x8 threads)': 35300.91057427724,
 		'[GPU - Double] Tensorflow': 63644.626557826996,
-		'[GPU - Float] CUDA C (Global, 1D, 128 blocks, 512 threads)': 23046.259490282107,
 		'[GPU - Float] CUDA C (Global, 2D, 64x16 blocks, 8x8 threads)': 18814.82109012026,
-		'[GPU - Float] CUDA C (Shared, 1D, 256 blocks, 256 threads)': 31567.759912278918,
+		'[GPU - Float] CUDA C (Global, 1D, 128 blocks, 512 threads)': 23046.259490282107,
 		'[GPU - Float] CUDA C (Shared, 2D, 64x16 blocks, 8x8 threads)': 24043.302722093533,
+		'[GPU - Float] CUDA C (Shared, 1D, 256 blocks, 256 threads)': 31567.759912278918,
 		'[GPU - Float] Tensorflow': 35953.68469933332,
 	}
 	
 	slenet_inference_energy = {
-		'[GPU] Tensorflow': 82392.58349666724
+		'[GPU] Tensorflow': 239498.04289627075,
+		'[GPU] CUDA C': 211948.394938291
 	}
 	
 	plot_energy_graph(data=saxpy_gpu_energy,
-	                 title="[GPU] SAXPY/DAXPY Inference Time for Single and Double Precision Data "
-	                       "(65536 size)")
-	plot_energy_graph(data=dot_product_gpu_energy, title="[GPU] Dot Product Inference Time for Single and Double "
-	                                                   "Precision Data (65536 size)")
+	                 title="[GPU] SAXPY/DAXPY Energy Consumption for Single and Double Precision Data (65536 size)")
+	plot_energy_graph(data=dot_product_gpu_energy, title="[GPU] Dot Product Energy Consumption for Single and Double "
+	                                                     "Precision Data (65536 size)")
 	plot_energy_graph(data=matrix_add_gpu_energy,
-	                 title="[GPU] Matrix Add Inference Time for Single and Double Precision "
-	                       "Data (512x512 size)")
+	                 title="[GPU] Matrix Add Energy Consumption for Single and Double Precision Data (512x512 size)")
 	plot_energy_graph(data=matrix_multiplication_gpu_energy,
-	                 title="[GPU] Matrix Multiplication Inference Time for Single "
-	                       "and Double Precision Data (512x256 and 256x128 size)")
+	                 title="[GPU] Matrix Multiplication Energy Consumption for Single and Double Precision Data "
+	                       "(512x256 and 256x128 size)")
+	
+	plot_energy_graph(data=slenet_inference_energy, title="[GPU] s-LeNet Energy Consumption")
 
 
 if __name__ == "__main__":
