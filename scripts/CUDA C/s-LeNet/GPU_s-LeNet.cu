@@ -13,13 +13,13 @@
 #define STRIDE 4
 
 #define N1 CHANNEL*CONV_OUTPUT_SIZE*CONV_OUTPUT_SIZE
-#define K1 64
+#define K1 128
 
 #define N2 CHANNEL*SS_OUTPUT_SIZE*SS_OUTPUT_SIZE
 #define K2 8
 
 #define N3 NUM_CLASSES * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE
-#define K3 10
+#define K3 16
 
 // Defining the mnist_data struct
 typedef struct mnist_data {
@@ -527,9 +527,9 @@ float s_LeNet(mnist_data *test_set) {
 			error++;
 	}
 
-    printf("Execution time = %f (ms) \n", time_taken);
-	printf("Error Rate = %f%% (%d out of 10000)\n", double(error) / double(test_cnt) * 100.0, error);
-	printf("Accuracy = %.3f%% (%d out of 10000)\n", 100.0 - double(error) / double(test_cnt) * 100.0, test_cnt - error);
+    // printf("Execution time = %f (ms) \n", time_taken);
+	// printf("Error Rate = %f%% (%d out of 10000)\n", double(error) / double(test_cnt) * 100.0, error);
+	// printf("Accuracy = %.3f%% (%d out of 10000)\n", 100.0 - double(error) / double(test_cnt) * 100.0, test_cnt - error);
 	return time_taken;
 }
 
@@ -561,7 +561,7 @@ int main() {
 	copy_trained_parameters();
 
 	// Performing forward pass
-	int count = 1;
+	int count = 100;
 	float averageTime = 0;
 
 	for (int i = 0; i < count; i++)

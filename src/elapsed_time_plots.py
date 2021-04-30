@@ -111,7 +111,7 @@ def main():
 	s_le_net_inference_elapsed_time = {
 		'[GPU] Tensorflow (Batch Size 8192)': 64.091960869996,
 		'[CPU] Tensorflow (Batch Size 8192)': 218.75732244998974,
-		'[GPU] CUDA C': 31.829
+		'[GPU] CUDA C': 24.947
 	}
 	
 	s_le_net_inference_elapsed_time_CUDA_C_kernels = {
@@ -142,21 +142,21 @@ def main():
 	#                                                                                       "Inference Time for Single and "
 	#                                                                                       "Double Precision Data "
 	#                                                                                       "(512x256 and 256x128 size)")
-	# plot_elapsed_time_graph(data=s_le_net_inference_elapsed_time, title='s-LeNet Inference Time for CPU and '
-	#                                                                     'GPU')
+	plot_elapsed_time_graph(data=s_le_net_inference_elapsed_time, title='s-LeNet Inference Time for CPU and '
+	                                                                    'GPU')
 	# plot_elapsed_time_graph(data=s_le_net_inference_elapsed_time_CUDA_C_kernels, title='s-LeNet Inference Time for CUDA '
 	#                                                                                    'C kernels')
 	# plot_accuracy_graph(data=s_le_net_inference_accuracy_tensorflow, title='s-LeNet Accuracy for CPU and GPU')
 	
-	plot_elapsed_time_graph(data=saxpy_gpu_elapsed_time, title="SAXPY/DAXPY Inference Time for Single and Double "
-	                                                           "Precision Data (65536 size)")
-	plot_elapsed_time_graph(data=dot_product_gpu_elapsed_time, title="Dot Product Inference Time for Single and "
-	                                                                 "Double Precision Data (65536 size)")
-	plot_elapsed_time_graph(data=matrix_add_gpu_elapsed_time, title="Matrix Add Inference Time for Single and "
-	                                                                "Double Precision Data (512x512 size)")
-	plot_elapsed_time_graph(data=matrix_multiplication_gpu_elapsed_time, title="Matrix Multiplication Inference "
-	                                                                           "Time for Single and Double Precision "
-	                                                                           "Data (512x256 and 256x128 size)")
+	# plot_elapsed_time_graph(data=saxpy_gpu_elapsed_time, title="SAXPY/DAXPY Inference Time for Single and Double "
+	#                                                            "Precision Data (65536 size)")
+	# plot_elapsed_time_graph(data=dot_product_gpu_elapsed_time, title="Dot Product Inference Time for Single and "
+	#                                                                  "Double Precision Data (65536 size)")
+	# plot_elapsed_time_graph(data=matrix_add_gpu_elapsed_time, title="Matrix Add Inference Time for Single and "
+	#                                                                 "Double Precision Data (512x512 size)")
+	# plot_elapsed_time_graph(data=matrix_multiplication_gpu_elapsed_time, title="Matrix Multiplication Inference "
+	#                                                                            "Time for Single and Double Precision "
+	#                                                                            "Data (512x256 and 256x128 size)")
 
 
 if __name__ == "__main__":
