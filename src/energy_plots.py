@@ -69,19 +69,19 @@ def main():
 	}
 	
 	slenet_inference_energy = {
-		'[GPU] Tensorflow': 239498.04289627075,
-		'[GPU] CUDA C': 211948.394938291
+		'[GPU] Tensorflow': 89560.52595,
+		'[GPU] CUDA C': 9706.952625
 	}
 	
-	plot_energy_graph(data=saxpy_gpu_energy,
-	                 title="[GPU] SAXPY/DAXPY Energy Consumption for Single and Double Precision Data (65536 size)")
-	plot_energy_graph(data=dot_product_gpu_energy, title="[GPU] Dot Product Energy Consumption for Single and Double "
-	                                                     "Precision Data (65536 size)")
-	plot_energy_graph(data=matrix_add_gpu_energy,
-	                 title="[GPU] Matrix Add Energy Consumption for Single and Double Precision Data (512x512 size)")
-	plot_energy_graph(data=matrix_multiplication_gpu_energy,
-	                 title="[GPU] Matrix Multiplication Energy Consumption for Single and Double Precision Data "
-	                       "(512x256 and 256x128 size)")
+	# plot_energy_graph(data=saxpy_gpu_energy,
+	#                  title="[GPU] SAXPY/DAXPY Energy Consumption for Single and Double Precision Data (65536 size)")
+	# plot_energy_graph(data=dot_product_gpu_energy, title="[GPU] Dot Product Energy Consumption for Single and Double "
+	#                                                      "Precision Data (65536 size)")
+	# plot_energy_graph(data=matrix_add_gpu_energy,
+	#                  title="[GPU] Matrix Add Energy Consumption for Single and Double Precision Data (512x512 size)")
+	# plot_energy_graph(data=matrix_multiplication_gpu_energy,
+	#                  title="[GPU] Matrix Multiplication Energy Consumption for Single and Double Precision Data "
+	#                        "(512x256 and 256x128 size)")
 	
 	plot_energy_graph(data=slenet_inference_energy, title="[GPU] s-LeNet Energy Consumption")
 

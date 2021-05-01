@@ -109,9 +109,9 @@ def main():
 	}
 	
 	s_le_net_inference_elapsed_time = {
-		'[GPU] Tensorflow (Batch Size 8192)': 64.091960869996,
-		'[CPU] Tensorflow (Batch Size 8192)': 218.75732244998974,
-		'[GPU] CUDA C': 24.947
+		'[GPU] Tensorflow (Batch Size 1)': 5308.234113,
+		'[CPU] Tensorflow (Batch Size 1)': 2951.483607,
+		'[GPU] CUDA C (Batch Size 1)': 407.877655
 	}
 	
 	s_le_net_inference_elapsed_time_CUDA_C_kernels = {

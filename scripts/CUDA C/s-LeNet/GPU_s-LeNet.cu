@@ -369,110 +369,110 @@ static double forward_pass(double data[INSIZE][INSIZE], bool verify) {
 			input[i][j] = data[i][j];
 	}
 
-	float (*d_input)[INSIZE];
-	cudaMalloc(&d_input, sizeof(float) * INSIZE * INSIZE);
-	cudaMemcpy(d_input, input, sizeof(float) * INSIZE * INSIZE, cudaMemcpyHostToDevice);
-
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
 	cudaEventRecord(start, 0);
 
+	float (*d_input)[INSIZE];
+	cudaMalloc(&d_input, sizeof(float) * INSIZE * INSIZE);
+	cudaMemcpy(d_input, input, sizeof(float) * INSIZE * INSIZE, cudaMemcpyHostToDevice);
+
 	// Performing Convolutional filtering
 	kernel_conv_filter<<<N1/K1, K1>>>(d_input, (float(*)[CONV_OUTPUT_SIZE][CONV_OUTPUT_SIZE])conv_layer.pre_output, (float(*)[FILTER_SIZE][FILTER_SIZE])conv_layer.weight);
 
 	// Verifying Convolutional filtering operation
-	if (verify) {
-		printf("Verifying Convolutional filtering operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
-		cudaMemcpy(verification, conv_layer.pre_output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifyConv(verification, 25.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Convolutional filtering operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, conv_layer.pre_output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifyConv(verification, 25.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Convolutional bias addition
 	kernel_conv_bias<<<N1/K1, K1>>>((float(*)[CONV_OUTPUT_SIZE][CONV_OUTPUT_SIZE])conv_layer.pre_output, conv_layer.bias);
 
 	// Verifying Convolutional bias operation
-	if (verify) {
-		printf("Verifying Convolutional bias operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
-		cudaMemcpy(verification, conv_layer.pre_output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifyConv(verification, 26.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Convolutional bias operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, conv_layer.pre_output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifyConv(verification, 26.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Convolutional sigmoid operation
 	kernel_conv_sigmoid<<<N1/K1, K1>>>((float(*)[CONV_OUTPUT_SIZE][CONV_OUTPUT_SIZE])conv_layer.pre_output, (float(*)[CONV_OUTPUT_SIZE][CONV_OUTPUT_SIZE])conv_layer.output);
 
 	// Verifying Convolutional sigmoid operation
-	if (verify) {
-		printf("Verifying Convolutional sigmoid operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
-		cudaMemcpy(verification, conv_layer.output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifyConv(verification, 1.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Convolutional sigmoid operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, conv_layer.output, sizeof(float) * CHANNEL * CONV_OUTPUT_SIZE * CONV_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifyConv(verification, 1.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Subsampling filtering
 	kernel_ss1_filter<<<N2/K2, K2>>>((float(*)[CONV_OUTPUT_SIZE][CONV_OUTPUT_SIZE])conv_layer.output, (float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])ss_layer.pre_output, (float(*)[SS_SIZE][SS_SIZE])ss_layer.weight);
 
 	// Verifying Subsampling filtering operation
-	if (verify) {
-		printf("Verifying Subsampling filtering operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
-		cudaMemcpy(verification, ss_layer.pre_output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifySS(verification, 16.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Subsampling filtering operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, ss_layer.pre_output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifySS(verification, 16.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Subsampling bias addition
 	kernel_ss1_bias<<<N2/K2, K2>>>((float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])ss_layer.pre_output, ss_layer.bias);
 
 	// Verifying Subsampling bias operation
-	if (verify) {
-		printf("Verifying Subsampling bias operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
-		cudaMemcpy(verification, ss_layer.pre_output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifySS(verification, 17.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Subsampling bias operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, ss_layer.pre_output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifySS(verification, 17.0f);
+	// 	free(verification);
+	// }
 
 	// // Performing Subsampling sigmoid operation
 	kernel_ss1_sigmoid<<<N2/K2, K2>>>((float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])ss_layer.pre_output, (float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])ss_layer.output);
 
 	// Verifying Subsampling sigmoid operation
-	if (verify) {
-		printf("Verifying Subsampling sigmoid operation: ");
-		verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
-		cudaMemcpy(verification, ss_layer.output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
-		verifySS(verification, 1.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Subsampling sigmoid operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE);
+	// 	cudaMemcpy(verification, ss_layer.output, sizeof(float) * CHANNEL * SS_OUTPUT_SIZE * SS_OUTPUT_SIZE, cudaMemcpyDeviceToHost);
+	// 	verifySS(verification, 1.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Fully-Connected Computation
 	kernel_fc1<<<N3/K3, K3>>>((float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])ss_layer.output, (float(*))fc_layer.pre_output, (float(*)[SS_OUTPUT_SIZE][SS_OUTPUT_SIZE][SS_OUTPUT_SIZE])fc_layer.weight);
 
 	// Verifying Fully-Connected Computation
-	if (verify) {
-		printf("Verifying Fully-Connected Computation: ");
-		verification = (float*)malloc(sizeof(float) * NUM_CLASSES);
-		cudaMemcpy(verification, fc_layer.pre_output, sizeof(float) * NUM_CLASSES, cudaMemcpyDeviceToHost);
-		verifyFC(verification, 216.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Fully-Connected Computation: ");
+	// 	verification = (float*)malloc(sizeof(float) * NUM_CLASSES);
+	// 	cudaMemcpy(verification, fc_layer.pre_output, sizeof(float) * NUM_CLASSES, cudaMemcpyDeviceToHost);
+	// 	verifyFC(verification, 216.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Fully-Connected bias operation
 	kernel_fc1_bias<<<1, K3>>>((float(*))fc_layer.pre_output, fc_layer.bias);
 
 	// Verifying Fully-Connected bias operation
-	if (verify) {
-		printf("Verifying Fully-Connected bias operation: ");
-		verification = (float*)malloc(sizeof(float) * NUM_CLASSES);
-		cudaMemcpy(verification, fc_layer.pre_output, sizeof(float) * NUM_CLASSES, cudaMemcpyDeviceToHost);
-		verifyFC(verification, 217.0f);
-		free(verification);
-	}
+	// if (verify) {
+	// 	printf("Verifying Fully-Connected bias operation: ");
+	// 	verification = (float*)malloc(sizeof(float) * NUM_CLASSES);
+	// 	cudaMemcpy(verification, fc_layer.pre_output, sizeof(float) * NUM_CLASSES, cudaMemcpyDeviceToHost);
+	// 	verifyFC(verification, 217.0f);
+	// 	free(verification);
+	// }
 
 	// Performing Fully-Connected sigmoid operation
 	kernel_fc1_sigmoid<<<1, K3>>>((float(*))fc_layer.pre_output, (float(*))fc_layer.output);
